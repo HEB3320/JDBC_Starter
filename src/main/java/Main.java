@@ -23,13 +23,14 @@ public class Main {
         String db_user     = "hr";
         String db_password = "hr";
         // creating Connection object
-        // just like creating Webdriver object , according to what kind of driver connection string provided
+        // just like creating Webdriver object
+        // According to what kind of driver and connection string provided
         //  it will create corresponding Connection object
         Connection conn = DriverManager.getConnection(connection_str,db_user,db_password);
 
         // once we have connection object , now we can create statement object. and it has ability to execute query
         Statement stmt = conn.createStatement();
-        // optionally you may do as below , if you want to just move top tp bottom direction
+        // optionally you may do as below , if you don't want to just move top tp bottom direction
         //Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 
         // use Statement Object to run query and store the result in ResultSet object
