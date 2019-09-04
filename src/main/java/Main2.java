@@ -11,15 +11,24 @@ public class Main2 {
 
         Connection conn = DriverManager.getConnection(connection_str,db_user,db_password);
 
-        Statement stmt = conn.createStatement();
+        //Statement stmt = conn.createStatement();
+        Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE
+                                            ,ResultSet.CONCUR_UPDATABLE );
 
         ResultSet rs = stmt.executeQuery("SELECT * FROM COUNTRIES");
 
         while(rs.next()){
-            System.out.println(rs.getObject("COUNTRY_ID")
-                    + " "+ rs.getObject("COUNTRY_Name")
-                    + " "+ rs.getObject("REGION_ID") );
+                System.out.println(rs.getObject("COUNTRY_ID")
+                        + " "+ rs.getObject("COUNTRY_Name")
+                        + " "+ rs.getObject("REGION_ID") );
 
+        }
+        System.out.println("-----------------");
+        // what if we want to move the cursor back up to access previous row
+        while(rs.previous()) {
+            System.out.println(rs.getObject("COUNTRY_ID")
+                    + " " + rs.getObject("COUNTRY_Name")
+                    + " " + rs.getObject("REGION_ID"));
         }
 
 
