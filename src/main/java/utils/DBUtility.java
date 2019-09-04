@@ -38,8 +38,8 @@ public class DBUtility {
         try {
             statement = connection.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             resultSet = statement.executeQuery();
-            resultSet.last();
-            return resultSet.getRow();
+            resultSet.last(); // moving to last row
+            return resultSet.getRow();// getRow will return current row number
         }catch(Exception e) {
             throw new RuntimeException(e);
         }
