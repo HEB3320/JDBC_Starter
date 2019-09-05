@@ -7,7 +7,6 @@ import java.util.Map;
 
 public class DBUtility {
 
-
     private static Connection connection;
     private static PreparedStatement statement;
     private static ResultSet resultSet;
@@ -20,6 +19,10 @@ public class DBUtility {
                             ConfigurationReader.getProperty("oracledb.user"),
                             ConfigurationReader.getProperty("oracledb.password"));
                     break;
+                case MYSQL:
+                    System.out.println("do some mysql stuff");
+                    break;
+
                 default:
                     connection = null;
 
