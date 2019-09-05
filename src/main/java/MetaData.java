@@ -54,10 +54,6 @@ public class MetaData {
         }
 
 
-
-
-
-
 //        rs.next();
 //        System.out.println(rs.getObject("COUNTRY_ID")
 //                + " "+ rs.getObject("COUNTRY_Name")
