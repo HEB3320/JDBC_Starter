@@ -30,9 +30,9 @@ public class Main {
         Connection conn = DriverManager.getConnection(connection_str,db_user,db_password);
 
         // once we have connection object , now we can create statement object. and it has ability to execute query
-        Statement stmt = conn.createStatement();
+        //Statement stmt = conn.createStatement();
         // optionally you may do as below , if you don't want to just move top tp bottom direction
-        //Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+        Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 
         // use Statement Object to run query and store the result in ResultSet object
         ResultSet rs = stmt.executeQuery("SELECT * FROM REGIONS");
@@ -51,8 +51,12 @@ public class Main {
                     + " "+ rs.getObject("Region_Name") );
         }
 
+        /// Connection , Statement , ResultSet are considered as resources
+        // once finished being used , it should be closed
 
-
+        rs.close();
+        stmt.close();
+        conn.close();
 
 
     }
