@@ -1,4 +1,4 @@
-
+package JDBC;
 
 public class EnumPractice {
 

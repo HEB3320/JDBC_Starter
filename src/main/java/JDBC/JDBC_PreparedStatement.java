@@ -1,3 +1,5 @@
+package JDBC;
+
 import utils.ConfigurationReader;
 
 import java.sql.*;

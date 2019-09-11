@@ -1,3 +1,4 @@
+package JDBC;
 import utils.ConfigurationReader;
 import utils.DBType;
 import utils.DBUtility;

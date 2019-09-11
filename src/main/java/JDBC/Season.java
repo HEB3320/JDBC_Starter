@@ -1,4 +1,4 @@
-
+package JDBC;
 
 // enum is one of 3 reference type we can use in java :   class , interface , enum
 // what is the advantage of enum ? first of all it's  not a string ,
