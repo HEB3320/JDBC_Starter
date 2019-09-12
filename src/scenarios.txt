@@ -53,7 +53,7 @@ and json object id should be 2
 
 Given Accept header is provided as Json
 When User send request to /api/spartans/2
-Then Reponse status code should be 200
+Then Response status code should be 200
 and header should have content Type / JSON
 and json object id should be 2
 

@@ -1,6 +1,7 @@
 package RestPractice;
 
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -49,7 +50,12 @@ public class SpartanRest_Test {
     @Test
     public void SingleSpartanData_Test(){
 
-        Response response = get("/spartans/2");
+        //1st way
+        //Response response = get("/spartans/2");
+        //2nd way
+        Response response =
+                //given().pathParam("id",2).get("/spartans/{id}")   ;
+                given().pathParam("id",2).when().get("/spartans/{id}");
 
         System.out.println( response.asString()  );
         System.out.println( response.body().asString()  );
@@ -59,7 +65,73 @@ public class SpartanRest_Test {
         assertEquals("application/json;charset=UTF-8",response.contentType());
         assertTrue(  response.asString().contains("Nels")    );
 
+    }
+//    Given Accept header is provided as Json
+//    When User send request to /api/spartans/2
+//    Then Response status code should be 200
+//    and header should have content Type / JSON
+//    and json object id should be 2
+    @Test
+    public void SingleSpartanDataWithHeader_Test(){
 
+        // RequestSpecification object hold the information about the request
+        // like header , path variable , query parameters, body
+
+        // Response is the object to store Response data
+
+        // this is how we can path header to teh request
+        Response response = given()
+                //.header("accept","application/json")
+                //.accept("application/json")
+                .accept(ContentType.JSON)
+                .when().get("/spartans/2");
+        assertEquals("application/json;charset=UTF-8",response.contentType());
+
+
+    }
+
+
+//    Given Accept header is provided as XML
+//    When User send request to /api/spartans/2
+//    Then Response status code should be 406
+//
+    @Test
+    public void SingleSpartanDataWithHeader_XMLstatus_code_406_Test(){
+
+        // RequestSpecification object hold the information about the request
+        // like header , path variable , query parameters, body
+
+        // Response is the object to store Response data
+
+        // this is how we can path header to teh request
+        Response response = given()
+                //.header("accept","application/json")
+                //.accept("application/json")
+                .accept(ContentType.XML)
+                .when().get("/spartans/2");
+
+        System.out.println( response.statusLine()   );
+        assertEquals(406, response.statusCode());
+
+
+    }
+
+
+//    Given no header is provided
+//    When User send request to /api/spartans/20000
+//    Then Reponse status code should be 404
+//    and header should have content Type / JSON
+//    and response payload should contains "Spartan Not Found"
+    @Test
+    public void Invalid_Spartan_ID_should_return_404_Test(){
+
+        Response response =  //get("/spartans/20000");
+                given().pathParam("my_id",20000).when().get("/spartans/{my_id}");
+
+        response.prettyPrint();
+        assertEquals(404, response.statusCode());
+        assertEquals("application/json;charset=UTF-8",response.contentType());
+        assertTrue(  response.asString().contains("Spartan Not Found")    );
     }
 
 
