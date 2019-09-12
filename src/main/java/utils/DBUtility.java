@@ -15,9 +15,11 @@ public class DBUtility {
         try {
             switch(dbType) {
                 case ORACLE:
-                    connection = DriverManager.getConnection(ConfigurationReader.getProperty("oracledb.url"),
+                    connection = DriverManager.getConnection(
+                            ConfigurationReader.getProperty("oracledb.url"),
                             ConfigurationReader.getProperty("oracledb.user"),
-                            ConfigurationReader.getProperty("oracledb.password"));
+                            ConfigurationReader.getProperty("oracledb.password")
+                            );
                     break;
                 case MYSQL:
                     System.out.println("do some mysql stuff");

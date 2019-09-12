@@ -7,8 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static io.restassured.RestAssured.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class SpartanRest_Test {
 
@@ -132,8 +131,48 @@ public class SpartanRest_Test {
         assertEquals("application/json;charset=UTF-8",response.contentType());
         assertTrue(  response.asString().contains("Spartan Not Found")    );
     }
+/*
+*   Given accept header is json
+*   query parameters gender Male
+*   When User send request to /api/spartans/search
+*   Then Reponse status code should be 200
+*    and header should have content Type / JSON
+* */
+@Test
+public void Search_By_Providing_Query_Parameter(){
+
+    Response response = given().
+                        accept(ContentType.JSON).
+                        queryParam("gender","Male").
+                        //param("gender","Male").
+                        when().
+                        get("/spartans/search");
+
+    assertEquals(200, response.statusCode());
+    assertFalse(  response.asString().contains("Female")   );
+    response.prettyPrint();
+
+
+    System.out.println(  response.path("pageable.sort.sorted").toString()  );
 
 
 
+}
 
+
+
+    @Test
+    public void SingleSpartanData_Json_FieldValue_Test() {
+
+        Response response =
+                //given().pathParam("id",2).get("/spartans/{id}")   ;
+                given().pathParam("id", 2).when().get("/spartans/{id}");
+        response.prettyPrint();
+
+        System.out.println(     response.path("name").toString()               );
+        System.out.println(     response.path("phone").toString()               );
+
+        assertEquals(  "Nels", response.path("name").toString()   );
+
+    }
 }
