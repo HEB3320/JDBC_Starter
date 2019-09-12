@@ -96,7 +96,7 @@ public class SpartanRest_Test {
 //    Then Response status code should be 406
 //
     @Test
-    public void SingleSpartanDataWithHeader_XMLstatus_code_406_Test(){
+    public void SingleSpartanDataWithHeader_XML_status_code_406_Test(){
 
         // RequestSpecification object hold the information about the request
         // like header , path variable , query parameters, body
@@ -112,7 +112,6 @@ public class SpartanRest_Test {
 
         System.out.println( response.statusLine()   );
         assertEquals(406, response.statusCode());
-
 
     }
 
