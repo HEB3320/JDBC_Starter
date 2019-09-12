@@ -35,7 +35,8 @@ public class SpartanRest_Test {
         assertEquals("application/json;charset=UTF-8",response.getHeader("content-type"));
 
         // checking whether one header exists
-        boolean hasDateHeader = response.getHeaders().hasHeaderWithName("Date");
+        // hasHeaderWithName is not case sensitive
+        boolean hasDateHeader = response.getHeaders().hasHeaderWithName("date");
         assertTrue(hasDateHeader);
     }
 
@@ -43,7 +44,24 @@ public class SpartanRest_Test {
 //    When User send request to /api/spartans/2
 //    Then Response status code should be 200
 //    and header should have content Type / JSON
+//      and text Nels show up in response body
 //   OPTIONAL  and json object id should be 2
+    @Test
+    public void SingleSpartanData_Test(){
+
+        Response response = get("/spartans/2");
+
+        System.out.println( response.asString()  );
+        System.out.println( response.body().asString()  );
+        // this will print result in formatted style
+        response.prettyPrint();
+        assertEquals(200, response.statusCode());
+        assertEquals("application/json;charset=UTF-8",response.contentType());
+        assertTrue(  response.asString().contains("Nels")    );
+
+
+    }
+
 
 
 
