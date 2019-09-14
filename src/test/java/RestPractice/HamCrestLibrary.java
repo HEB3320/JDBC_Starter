@@ -26,7 +26,6 @@ public class HamCrestLibrary {
     @Test
     public void DoingAssertionWithHamcrest_ForSpartan(){
 
-
         //Response response= given().pathParam("my_id",3).get("/spartans/{my_id}");
         //response.prettyPrint();
         given()
@@ -39,8 +38,7 @@ public class HamCrestLibrary {
                 .contentType(ContentType.JSON)
                 .body("id",equalTo(3))
                 .body("gender", equalToIgnoringCase("male"))
-                .body("phone",equalTo("6105035231"));
-
+                .body("phone", hasToString("6105035231"));
 
 
     }
