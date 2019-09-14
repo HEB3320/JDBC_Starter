@@ -122,5 +122,12 @@
 
         }
 
+        // get single Spartan as json response by calling /api/spartans/{id}
+        // store the response inside a Map of String and Object
+        // do some assertion expected value you already set
+
+
+
+
 
     }

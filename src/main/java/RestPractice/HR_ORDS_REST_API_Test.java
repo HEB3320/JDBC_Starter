@@ -7,6 +7,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 
+import java.util.List;
+import java.util.Map;
+
 import static io.restassured.RestAssured.*;
 import static org.junit.Assert.*;
 
@@ -21,10 +24,51 @@ public class HR_ORDS_REST_API_Test {
     }
 
     @Test
-    public void test_regions(){
+    public void test_all_regions(){
 
         Response response = get("/regions");
+        //response.prettyPrint();
+
+        String first_regionName = response.jsonPath().getString("items[0].region_name");
+        System.out.println(first_regionName);
+
+        //String all_regionName = response.jsonPath().getString("items.region_name");
+        List<String> all_regionName = response.jsonPath().getList("items.region_name");
+
+        System.out.println(all_regionName);
+
+        // get all the href field from the regions
+        String all_regionlinks = response.jsonPath()
+                        .getString("items[1].links[0].href");
+        System.out.println(all_regionlinks);
+
+
+        List<String> all_regionlinksList = response.jsonPath()
+                .getList("items.links.href");
+
+        // TASK JSON PATH TASK ,
+        // FIND OUT THE LAST LINKS ON TOP LEVEL
+        // ASSERT THE rel value is first
+        String lastLinksRel = response.jsonPath().getString("links[3].rel");
+        assertEquals("first",lastLinksRel);
+
+        System.out.println(all_regionlinksList);
+
+        assertEquals(200,response.statusCode());
+
+    }
+
+    @Test
+    public void test_single_Region(){
+
+        Response response = given().pathParam("my_id",1)
+                                .get("/regions/{my_id}");
+
         response.prettyPrint();
+
+        Map<String, Object> myJsonMap = response.jsonPath().getMap("");
+        System.out.println( myJsonMap.get("region_name")  );
+        System.out.println( myJsonMap.get("links")  );
 
     }
 
@@ -36,3 +80,6 @@ public class HR_ORDS_REST_API_Test {
 
 
 }
+
+
+
