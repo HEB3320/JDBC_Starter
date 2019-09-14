@@ -136,10 +136,35 @@
             System.out.println(myJsonMap.get("gender"));
             System.out.println(myJsonMap.get("phone"));
 
+        }
+
+        @Test
+        public void All_Spartan_Map_Test(){
+
+            Response response= get("/spartans");
+            List< Map<String,Object>  >  allSpartans =  response.jsonPath().getList("");
+
+            System.out.println(allSpartans);
+            for (Map<String,Object> each   :  allSpartans ) {
+                System.out.println(each);
+            }
 
         }
 
+        @Test
+        public void Seach_All_Spartan_Map_Test() {
 
+            Response response = given().
+                    accept(ContentType.JSON).
+                    queryParam("gender", "Male").
+                    //param("gender","Male").
+                            when().
+                            get("/spartans/search");
 
+            List< Map<String,Object>  >  allSpartans =  response.jsonPath().getList("content");
+            for (Map<String,Object> each   :  allSpartans ) {
+                System.out.println(each);
+            }
+        }
 
     }
