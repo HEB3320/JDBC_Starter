@@ -1,62 +1,126 @@
-package RestPractice;
+    package RestPractice;
 
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-import org.junit.BeforeClass;
-import org.junit.Test;
+    import io.restassured.RestAssured;
+    import io.restassured.http.ContentType;
+    import io.restassured.response.Response;
+    import io.restassured.specification.RequestSpecification;
+    import org.junit.BeforeClass;
+    import org.junit.Test;
 
-import static io.restassured.RestAssured.get;
-import static io.restassured.RestAssured.given;
-import static org.junit.Assert.*;
+    import java.util.List;
 
-public class SpartanRest_Weekend {
+    import static io.restassured.RestAssured.get;
+    import static io.restassured.RestAssured.given;
+    import static org.junit.Assert.*;
 
-    @BeforeClass
-    public static void setUp() {
-        RestAssured.baseURI = "http://3.89.115.0";
-        RestAssured.port = 8000;
-        RestAssured.basePath = "/api";
-        // above will generate a BASE REQUEST URL OF http://52.23.254.102:8000/api
-    }
+    public class SpartanRest_Weekend {
 
-    @Test
-    public void test1(){
+        @BeforeClass
+        public static void setUp() {
+            RestAssured.baseURI = "http://3.89.115.0";
+            RestAssured.port = 8000;
+            RestAssured.basePath = "/api";
+            // above will generate a BASE REQUEST URL OF http://52.23.254.102:8000/api
+        }
 
-        //RequestSpecification reqSpec = given().accept(ContentType.JSON);
-        Response response =
-                // RequestSpecification
-                given()
-                    .accept(ContentType.JSON).
-                when()
-        // Actual request is being sent using HTTP verbs methods with URL
-                    .get("/spartans") ;
-        // eventually it will return a Response object
+        @Test
+        public void test1(){
 
-    }
-
-    @Test
-    public void test2(){
-
-        //RequestSpecification reqSpec = given().accept(ContentType.JSON);
-        Response response =
-                // RequestSpecification
-                given()
+            //RequestSpecification reqSpec = given().accept(ContentType.JSON);
+            Response response =
+                    // RequestSpecification
+                    given()
                         .accept(ContentType.JSON).
-                        when()
-                        // Actual request is being sent using HTTP verbs methods with URL
-                        .get("/spartans/2") ;
-        // eventually it will return a Response object
-        response.prettyPrint();
-        assertEquals( "Male" , response.path("gender").toString()     );
+                    when()
+            // Actual request is being sent using HTTP verbs methods with URL
+                        .get("/spartans") ;
+            // eventually it will return a Response object
+
+        }
+
+        @Test
+        public void test2(){
+
+            //RequestSpecification reqSpec = given().accept(ContentType.JSON);
+            Response response =
+                    // RequestSpecification
+                    given()
+                            .accept(ContentType.JSON).
+                            when()
+                            // Actual request is being sent using HTTP verbs methods with URL
+                            .get("/spartans/2") ;
+            // eventually it will return a Response object
+            response.prettyPrint();
+            assertEquals( "Male" , response.path("gender").toString()     );
+
+
+        }
+
+
+        @Test
+        public void Search_By_Providing_Query_Parameter() {
+
+            Response response = given().
+                    accept(ContentType.JSON).
+                    queryParam("gender", "Male").
+                    //param("gender","Male").
+                            when().
+                            get("/spartans/search");
+
+            assertEquals(200, response.statusCode());
+            assertFalse(response.asString().contains("Female"));
+            response.prettyPrint();
+
+
+            System.out.println(response.path("pageable.sort.empty").toString());
+            // jsonPath -->> just like xpath , it's for finding elements in json object / document
+
+            boolean isEmpty = response.jsonPath().getBoolean("pageable.sort.empty") ;
+            assertTrue("ASSERTION FOR EMPTY HAS FAILED"  , isEmpty);
+
+            int totalElements = response.jsonPath().getInt("totalElements");
+            System.out.println("totalElements is : " + totalElements);
+
+           // find out the first guys phone number
+
+            // task number 1
+            // find out totalElement field from the response  , numberOfElements
+
+
+        }
+
+        @Test
+        public void Search_By_Providing_JsonPath_Practice_For_Array() {
+
+            Response response = given().
+                    accept(ContentType.JSON).
+                    queryParam("gender", "Male").
+                    //param("gender","Male").
+                            when().
+                            get("/spartans/search");
+
+            assertEquals(200, response.statusCode());
+            assertFalse(response.asString().contains("Female"));
+
+            long firstPhone = response.jsonPath().getLong("content[0].phone");
+            System.out.println("first guy phone is " + firstPhone);
+
+            // jsonPath for content return a json array
+            // in order to get single json object we would use  content[indexnumber]
+            // in order to get single field in that json obeject : content[indexnumber].fieldName
+                        // for example content[1].phone --> second items phone number
+            // if we want to store entire phone as a List
+                // we can use getList methods with jsonPath by taking out index
+                    // content.phone
+
+            List<Long>  phoneList = response.jsonPath().getList("content.phone");
+            // get all the name in List of String
+            System.out.println(  phoneList     );
+
+            List<String> nameList = response.jsonPath().getList("content.name");
+            System.out.println(  nameList     );
+
+        }
 
 
     }
-
-
-
-
-
-
-}
