@@ -40,7 +40,6 @@ public class HamCrestLibrary {
                 .body("gender", equalToIgnoringCase("male"))
                 .body("phone", hasToString("6105035231"));
 
-
     }
 
 
@@ -54,8 +53,8 @@ public class HamCrestLibrary {
 
         assertEquals(30, a+b) ;
 
-        assertThat(30, equalTo(a+b));
-        assertThat(20, greaterThan(a+b) );
+        assertThat(a+b, equalTo(30));
+        assertThat(a+b, greaterThan(20) );
 
     }
 
