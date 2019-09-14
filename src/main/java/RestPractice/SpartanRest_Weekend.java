@@ -118,7 +118,7 @@
             System.out.println(  phoneList     );
 
             List<String> nameList = response.jsonPath().getList("content.name");
-            System.out.println(  nameList     );
+            System.out.println(  nameList   );
 
         }
 
