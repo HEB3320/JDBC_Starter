@@ -8,6 +8,7 @@
     import org.junit.Test;
 
     import java.util.List;
+    import java.util.Map;
 
     import static io.restassured.RestAssured.get;
     import static io.restassured.RestAssured.given;
@@ -125,7 +126,21 @@
         // get single Spartan as json response by calling /api/spartans/{id}
         // store the response inside a Map of String and Object
         // do some assertion expected value you already set
+        @Test
+        public void Single_Spartan_Map_Test(){
 
+            Response response= given().pathParam("my_id",3).get("/spartans/{my_id}");
+            response.prettyPrint();
+            Map<String,Object> myJsonMap=response.jsonPath().getMap("");
+            System.out.println(myJsonMap.get("name"));
+            System.out.println(myJsonMap.get("gender"));
+            System.out.println(myJsonMap.get("phone"));
+
+
+
+
+
+        }
 
 
 
