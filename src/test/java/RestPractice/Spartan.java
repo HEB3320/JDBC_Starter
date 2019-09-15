@@ -1,7 +1,9 @@
 package RestPractice;
 
+
 public class Spartan {
 
+    //private long id;
     private String name ;
     private String gender;
     private long phone;
@@ -14,6 +16,14 @@ public class Spartan {
         this.gender = gender;
         this.phone = phone;
     }
+//    //@JsonIgnore
+//    public long getId() {
+//        return id;
+//    }
+//    //@JsonProperty
+//    public void setId(long id) {
+//        this.id = id;
+//    }
 
     public String getName() {
         return name;
@@ -37,5 +47,14 @@ public class Spartan {
 
     public void setPhone(long phone) {
         this.phone = phone;
+    }
+
+    @Override
+    public String toString() {
+        return "Spartan{" +
+                ", name='" + name + '\'' +
+                ", gender='" + gender + '\'' +
+                ", phone=" + phone +
+                '}';
     }
 }

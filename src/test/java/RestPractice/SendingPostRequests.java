@@ -41,7 +41,7 @@ public class SendingPostRequests {
 
     // Sending a post request
     @Test
-    public void Add_NewSpartan_WithStringAsBody_Test(){
+    public void Add_NewSpartan_WithStringAsBody_Test() {
 
         given()
                 .log().all()
@@ -51,14 +51,14 @@ public class SendingPostRequests {
                         "    \"gender\": \"Male\",\n" +
                         "    \"phone\": 42189713412\n" +
                         "}").
-        when()
+                when()
                 .post("/spartans").
-        then()
+                then()
                 .log().all()
                 .statusCode(201)
-                .body("success",is("A Spartan is Born!"))
-                .body("data.name",equalToIgnoringCase("Jon Snow"))
-                .body("data.phone",hasToString("42189713412"))
+                .body("success", is("A Spartan is Born!"))
+                .body("data.name", equalToIgnoringCase("Jon Snow"))
+                .body("data.phone", hasToString("42189713412"))
 
 
         ;
@@ -66,79 +66,105 @@ public class SendingPostRequests {
     }
 
     @Test
-    public void Add_NewSpartan_WithMapAsBody_Test(){
+    public void Add_NewSpartan_WithMapAsBody_Test() {
 
-        Map<String,Object> bodyMap = new HashMap<>();
-        bodyMap.put("name","Ashraf");
-        bodyMap.put("gender","Male");
-        bodyMap.put("phone","42189713412");
+        Map<String, Object> bodyMap = new HashMap<>();
+        bodyMap.put("name", "Ashraf");
+        bodyMap.put("gender", "Male");
+        bodyMap.put("phone", "42189713412");
 
         given()
                 .log().all()
                 .contentType(ContentType.JSON)
-                .body(  bodyMap  ).
-        when()
+                .body(bodyMap).
+                when()
                 .post("/spartans").
-        then()
+                then()
                 .log().all()
                 .statusCode(201)
                 .contentType(ContentType.JSON)
-                .body("success",is("A Spartan is Born!"))
-                .body("data.name",equalToIgnoringCase("Ashraf"))
-                .body("data.phone",hasToString("42189713412"))
+                .body("success", is("A Spartan is Born!"))
+                .body("data.name", equalToIgnoringCase("Ashraf"))
+                .body("data.phone", hasToString("42189713412"))
 
         ;
 
     }
 
     @Test
-    public void Add_NewSpartan_WithPojoAsBody_Test(){
+    public void Add_NewSpartan_WithPojoAsBody_Test() {
 
-      Spartan spartan = new Spartan("Myensulu","Female",1231231231);
+        Spartan spartan = new Spartan("Myensulu", "Female", 1231231231);
 
         given()
                 .log().all()
                 .contentType(ContentType.JSON)
-                .body(  spartan  ).
-        when()
+                .body(spartan).
+                when()
                 .post("/spartans").
-        then()
+                then()
                 .log().all()
                 .statusCode(201)
                 .contentType(ContentType.JSON)
-                .body("success",is("A Spartan is Born!"))
-                .body("data.name",equalToIgnoringCase("Myensulu"))
-                .body("data.phone",hasToString("1231231231"))
+                .body("success", is("A Spartan is Born!"))
+                .body("data.name", equalToIgnoringCase("Myensulu"))
+                .body("data.phone", hasToString("1231231231"))
 
         ;
 
     }
 
     @Test
-    public void Add_NewSpartan_negative_Test(){
+    public void Add_NewSpartan_negative_Test() {
 
-        Spartan spartan = new Spartan("M","Female",1231231231);
+        Spartan spartan = new Spartan("M", "Female", 1231231231);
 
         given()
                 .log().all()
                 .contentType(ContentType.JSON)
-                .body(  spartan  ).
-        when()
+                .body(spartan).
+                when()
                 .post("/spartans").
-        then()
+                then()
                 .log().all()
                 .assertThat()
                 .statusCode(400)
-                .body("error",is("Bad Request"))
+                .body("error", is("Bad Request"))
                 .body("errors[0].defaultMessage"
-                        ,is("name should be at least 2 character and max 15 character"))
-
+                        , is("name should be at least 2 character and max 15 character"))
 
         ;
 
     }
 
+    @Test
+    public void Add_NewSpartan_negativeNameGenderPhone_Test() {
 
+        Spartan spartan = new Spartan("M", "F", 123);
 
+        given()
+                .log().all()
+                .contentType(ContentType.JSON)
+                .body(spartan).
+                when()
+                .post("/spartans").
+                then()
+                .log().all()
+                .assertThat()
+                .statusCode(400)
+                .body("error", is("Bad Request"))
+//                .body("errors.defaultMessage"
+//                        ,hasItem("name should be at least 2 character and max 15 character"))
+//                .body("errors.defaultMessage"
+//                                ,hasItem("Gender should be either Male or Female")
+                .body("errors.defaultMessage", hasSize(3))
+                .body("errors.defaultMessage",
+                        hasItems("Gender should be either Male or Female"
+                                , "Phone number should be at least 10 digit and UNIQUE!!"
+                                , "name should be at least 2 character and max 15 character"))
+                .body("message", containsString("Error count: 3"))
+        ;
+
+    }
 
 }
