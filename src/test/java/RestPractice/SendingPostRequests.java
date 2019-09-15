@@ -114,6 +114,30 @@ public class SendingPostRequests {
 
     }
 
+    @Test
+    public void Add_NewSpartan_negative_Test(){
+
+        Spartan spartan = new Spartan("M","Female",1231231231);
+
+        given()
+                .log().all()
+                .contentType(ContentType.JSON)
+                .body(  spartan  ).
+        when()
+                .post("/spartans").
+        then()
+                .log().all()
+                .assertThat()
+                .statusCode(400)
+                .body("error",is("Bad Request"))
+                .body("errors[0].defaultMessage"
+                        ,is("name should be at least 2 character and max 15 character"))
+
+
+        ;
+
+    }
+
 
 
 
