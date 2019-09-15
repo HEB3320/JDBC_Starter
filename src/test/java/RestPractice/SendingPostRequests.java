@@ -5,6 +5,7 @@ import io.restassured.http.ContentType;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -109,6 +110,27 @@ public class SendingPostRequests {
                 .body("success", is("A Spartan is Born!"))
                 .body("data.name", equalToIgnoringCase("Myensulu"))
                 .body("data.phone", hasToString("1231231231"))
+
+        ;
+
+    }
+
+    @Test
+    public void Add_NewSpartan_With_ExternalFile_Test() {
+
+        given()
+                .log().all()
+                .contentType(ContentType.JSON)
+                .body(new File("src/test/resources/data.json")).
+        when()
+                .post("/spartans").
+        then()
+                .log().all()
+                .statusCode(201)
+                .contentType(ContentType.JSON)
+                .body("success", is("A Spartan is Born!"))
+                .body("data.name", equalToIgnoringCase("Brady"))
+                .body("data.phone", hasToString("67413853202"))
 
         ;
 
