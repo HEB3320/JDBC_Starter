@@ -29,9 +29,6 @@ public class Full_Cycle_Test extends TestBase{
                 ;
 
 
-
-
-
         //  verifying the updated data using get request
         given()
                 .log().all()
