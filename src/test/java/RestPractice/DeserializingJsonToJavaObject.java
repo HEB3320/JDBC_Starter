@@ -22,8 +22,10 @@ public class DeserializingJsonToJavaObject {
     @Test
     public void DeserializeAnJsonToObject_Test() {
 
-
-        get("/spartans/10").jsonPath().get
+        Spartan sp1 = get("/spartans/10")
+                        .jsonPath()
+                        .getObject("",Spartan.class) ;
+        System.out.println(sp1);
 
 
     }

@@ -1,9 +1,11 @@
 package RestPractice;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Spartan {
 
-    //private long id;
     private String name ;
     private String gender;
     private long phone;
@@ -52,7 +54,7 @@ public class Spartan {
     @Override
     public String toString() {
         return "Spartan{" +
-                ", name='" + name + '\'' +
+                "  name='" + name + '\'' +
                 ", gender='" + gender + '\'' +
                 ", phone=" + phone +
                 '}';
