@@ -1,6 +1,7 @@
 package RestPractice;
 
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import utils.ConfigurationReader;
@@ -23,21 +24,33 @@ public class DeserializingJsonToJavaObject {
     public void DeserializeAnJsonToObject_Test() {
 
         // FIRST WAY
-        Spartan sp1 = get("/spartans/10").prettyPeek()
+        Spartan sp1 = get("/spartans/10")//.prettyPeek()
                         .jsonPath()
                         .getObject("",Spartan.class) ;
         System.out.println(sp1);
 
         // SECOND WAY
 
-        Spartan sp2 = get("/spartans/15").prettyPeek().as(Spartan.class);
+        Spartan sp2 = get("/spartans/15")//.prettyPeek()
+                        .as(Spartan.class);
         System.out.println(sp2);
-
-
-
 
     }
 
+    @Test
+    public void Add_NewSpartan_WithPojoAsBody_Test() {
 
+        Spartan spartan = new Spartan("Myensulu", "Female", 1231231231);
+
+        given()
+                .log().all()
+                .contentType(ContentType.JSON)
+                .body(spartan).
+        when()
+                .post("/spartans").
+                then()
+                .statusCode(201);
+
+    }
 
 }
