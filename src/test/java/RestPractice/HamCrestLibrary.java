@@ -2,6 +2,7 @@ package RestPractice;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -65,6 +66,8 @@ public class HamCrestLibrary {
 
         int[] nums = {1,4,6,7,8} ;
 
+        //assertThat(nums, hasItemInArray(3));
+       // assertThat(nums, arrayContaining(6));
         //Matchers.contains()
        //assertThat(nums  , hasItemInArray(1));
        // assertThat(1 ,hasItemInArray(1) );
