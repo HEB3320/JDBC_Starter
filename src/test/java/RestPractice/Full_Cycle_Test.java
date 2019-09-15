@@ -22,7 +22,7 @@ public class Full_Cycle_Test extends TestBase{
                 .pathParam("id",spartanID)
                 .body(new Spartan("Zeynep","Female",1231231231)).
         when()
-                .put("/spartans/{id}").
+                .put("/spartans/{id}",spartanID).
         then()
                 .log().all()
                 .statusCode(204)
@@ -31,10 +31,10 @@ public class Full_Cycle_Test extends TestBase{
 
         //  verifying the updated data using get request
         given()
-                .log().all()
-                .pathParam("id",spartanID).
+                .log().all().
+                //.pathParam("id",spartanID).
         when()
-                .get("/spartans/{id}").
+                .get("/spartans/{id}",spartanID). // another way to pass --> path pathParam
         then()
                 .assertThat()
                 .and()
@@ -101,11 +101,4 @@ public class Full_Cycle_Test extends TestBase{
 
     }
 
-
-
-
 }
-
-
-
-
