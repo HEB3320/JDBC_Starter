@@ -31,9 +31,9 @@ public class HamCrestLibrary {
         //response.prettyPrint();
         given()
                 .pathParam("my_id",3).
-        when()
+                when()
                 .get("/spartans/{my_id}").
-        then()
+                then()
                 .assertThat()
                 .statusCode(equalTo(200))
                 .contentType(ContentType.JSON)
@@ -42,6 +42,12 @@ public class HamCrestLibrary {
                 .body("phone", hasToString("6105035231"));
 
     }
+
+
+
+
+
+
 
 
 
