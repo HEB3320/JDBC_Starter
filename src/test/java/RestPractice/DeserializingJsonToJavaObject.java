@@ -22,10 +22,18 @@ public class DeserializingJsonToJavaObject {
     @Test
     public void DeserializeAnJsonToObject_Test() {
 
-        Spartan sp1 = get("/spartans/10")
+        // FIRST WAY
+        Spartan sp1 = get("/spartans/10").prettyPeek()
                         .jsonPath()
                         .getObject("",Spartan.class) ;
         System.out.println(sp1);
+
+        // SECOND WAY
+
+        Spartan sp2 = get("/spartans/15").prettyPeek().as(Spartan.class);
+        System.out.println(sp2);
+
+
 
 
     }
