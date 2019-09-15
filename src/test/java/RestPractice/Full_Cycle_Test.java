@@ -94,7 +94,7 @@ public class Full_Cycle_Test extends TestBase{
                     .contentType(ContentType.JSON)
                     .body(spartan).
                when()
-                    .post("/spartans")
+                    .post("/spartans/")
                     .prettyPeek()
                     .jsonPath()
                     .getInt("data.id") ;
