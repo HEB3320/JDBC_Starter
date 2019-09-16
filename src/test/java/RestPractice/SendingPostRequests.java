@@ -78,9 +78,9 @@ public class SendingPostRequests {
                 .log().all()
                 .contentType(ContentType.JSON)
                 .body(bodyMap).
-                when()
+        when()
                 .post("/spartans").
-                then()
+        then()
                 .log().all()
                 .statusCode(201)
                 .contentType(ContentType.JSON)
@@ -188,5 +188,9 @@ public class SendingPostRequests {
         ;
 
     }
+
+
+
+
 
 }
