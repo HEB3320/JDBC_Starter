@@ -33,13 +33,11 @@ public class BookIt_With_Bearer_Token {
                 .body("accessToken" ,notNullValue()
                 ) ;
 
-
-
     }
 
 
     @Test
-    public void getAllRoom_Test(){
+    public void getAllRoom_Bearer_Token_Test(){
 
         String newToken = generateTokenUtility();
         given()
@@ -49,6 +47,22 @@ public class BookIt_With_Bearer_Token {
         then()
                 .statusCode(200);
 
+
+    }
+
+    // BooKIT APP implements oath2 , so we can directly use oath2 access token
+    // above approach will work for any oath2 based authentication and authorization
+    @Test
+    public void getAllRoom_oath2_Test(){
+
+
+        String newToken = generateTokenUtility();
+        given()
+                .auth().oauth2(newToken).
+        when()
+                .get("/api/rooms").
+        then()
+                .statusCode(200);
 
 
     }
