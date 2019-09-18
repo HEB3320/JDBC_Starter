@@ -2,25 +2,26 @@ package RestPractice;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 //@JsonIgnoreProperties(ignoreUnknown = true)
 public class Spartan {
 
     private long id;
-    private String name ;
+    private String name;
     private String gender;
     private long phone;
 
-    public Spartan(){
+    public Spartan() {
 
     }
+
     public Spartan(String name, String gender, long phone) {
         this.name = name;
         this.gender = gender;
         this.phone = phone;
     }
+
     @JsonIgnore  // this will enable us to ignore ID field from being written into json
     // this will happen when you do seriliaze
     public long getId() {

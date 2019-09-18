@@ -1,4 +1,5 @@
 package utils;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,15 +12,15 @@ public class DBUtility {
     private static PreparedStatement statement;
     private static ResultSet resultSet;
 
-    public static void establishConnection(DBType dbType)  {
+    public static void establishConnection(DBType dbType) {
         try {
-            switch(dbType) {
+            switch (dbType) {
                 case ORACLE:
                     connection = DriverManager.getConnection(
                             ConfigurationReader.getProperty("oracledb.url"),
                             ConfigurationReader.getProperty("oracledb.user"),
                             ConfigurationReader.getProperty("oracledb.password")
-                            );
+                    );
                     break;
                 case MYSQL:
                     System.out.println("do some mysql stuff");
@@ -29,41 +30,41 @@ public class DBUtility {
                     connection = null;
 
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static int getRowsCount(String sql)  {
+    public static int getRowsCount(String sql) {
 
         try {
-            statement = connection.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            statement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             resultSet = statement.executeQuery();
             resultSet.last(); // moving to last row
             return resultSet.getRow();// getRow will return current row number
-        }catch(Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
 
     }
 
-    public static List<Map<String,Object>> runSQLQuery(String sql){
+    public static List<Map<String, Object>> runSQLQuery(String sql) {
 
         try {
-            statement = connection.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            statement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             resultSet = statement.executeQuery();
 
-            List<Map<String,Object>> list = new ArrayList<>();
+            List<Map<String, Object>> list = new ArrayList<>();
 
             ResultSetMetaData rsMdata = resultSet.getMetaData();
             int colCount = rsMdata.getColumnCount();
 
-            while(resultSet.next()) {
+            while (resultSet.next()) {
 
-                Map<String,Object> rowMap = new HashMap<>();
+                Map<String, Object> rowMap = new HashMap<>();
 
-                for(int col = 1; col <= colCount; col++) {
+                for (int col = 1; col <= colCount; col++) {
                     rowMap.put(rsMdata.getColumnName(col), resultSet.getObject(col));
                 }
 
@@ -72,24 +73,24 @@ public class DBUtility {
             }
 
             return list;
-        }catch(Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
     }
 
     public static void closeConnections() {
-        try{
-            if(resultSet != null && !resultSet.isClosed()) {
+        try {
+            if (resultSet != null && !resultSet.isClosed()) {
                 resultSet.close();
             }
-            if(statement != null && !statement.isClosed()) {
+            if (statement != null && !statement.isClosed()) {
                 statement.close();
             }
-            if(connection != null && !connection.isClosed()) {
+            if (connection != null && !connection.isClosed()) {
                 connection.close();
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

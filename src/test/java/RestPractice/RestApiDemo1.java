@@ -16,12 +16,12 @@ public class RestApiDemo1 {
         And I want to test that response contains "instructors"
      */
     @Test
-    public void instructorsTest(){
+    public void instructorsTest() {
 
-    when().get(url)
-            .then().statusCode(200)
-            .and().contentType(ContentType.JSON)
-            .and().body(containsString("instructors"));
+        when().get(url)
+                .then().statusCode(200)
+                .and().contentType(ContentType.JSON)
+                .and().body(containsString("instructors"));
     }
 
 }

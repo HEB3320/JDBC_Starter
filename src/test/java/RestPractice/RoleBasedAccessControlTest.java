@@ -1,31 +1,32 @@
 package RestPractice;
 
 import io.restassured.http.ContentType;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import utils.ConfigurationReader;
 
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.*;
-public class RoleBasedAccessControlTest extends TestBase{
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.blankOrNullString;
+import static org.hamcrest.Matchers.is;
+
+public class RoleBasedAccessControlTest extends TestBase {
 
 
     /*
-    * Given public have not provided user credentials or token
-    * When user try to send get request on /spartans/42
-    * then user should get status code 401
+     * Given public have not provided user credentials or token
+     * When user try to send get request on /spartans/42
+     * then user should get status code 401
      *
-    * */
+     * */
 
     @Test
-    public void PublicUserRoleCanNotViewData_Test(){
+    public void PublicUserRoleCanNotViewData_Test() {
 
         given()
                 .log().all()
                 .accept(ContentType.JSON).
-        when()
+                when()
                 .get("/spartans/117").
-        then()
+                then()
                 .log().all()
                 .statusCode(401);
 
@@ -39,7 +40,7 @@ public class RoleBasedAccessControlTest extends TestBase{
      *
      * */
     @Test
-    public void AuthenticatedUser_with_USERRoleCanViewData_Test(){
+    public void AuthenticatedUser_with_USERRoleCanViewData_Test() {
 
         String username = ConfigurationReader.getProperty("spartan.user_role.name");
         String password = ConfigurationReader.getProperty("spartan.user_role.password");
@@ -47,7 +48,7 @@ public class RoleBasedAccessControlTest extends TestBase{
 
         given()
                 // this is how we do basic auth authentication in RestAssured
-                .auth().basic(username,password)
+                .auth().basic(username, password)
                 .log().all()
                 .accept(ContentType.JSON).
                 when()
@@ -66,24 +67,24 @@ public class RoleBasedAccessControlTest extends TestBase{
      * and body    "error" field should be "Forbidden",
      * */
     @Test
-    public void AuthenticatedUser_with_Role_USER_CanNotUpdateData_Test(){
+    public void AuthenticatedUser_with_Role_USER_CanNotUpdateData_Test() {
 
         String username = ConfigurationReader.getProperty("spartan.user_role.name");
         String password = ConfigurationReader.getProperty("spartan.user_role.password");
 
         given()
                 // this is how we do basic auth authentication in RestAssured
-                .auth().basic(username,password)
+                .auth().basic(username, password)
                 .log().all()
-                .pathParam("spartan_id",117)
+                .pathParam("spartan_id", 117)
                 .contentType(ContentType.JSON)
-                .body(new Spartan("Asim","Male",987654321)).
+                .body(new Spartan("Asim", "Male", 987654321)).
 
-        when()
+                when()
                 .put("/spartans/{spartan_id}").
-        then()
+                then()
                 .statusCode(403)
-                .body("error",is("Forbidden"))
+                .body("error", is("Forbidden"))
         ;
 
 
@@ -97,32 +98,31 @@ public class RoleBasedAccessControlTest extends TestBase{
      * and we should get empty body
      * */
     @Test
-    public void AuthenticatedUser_with_Role_ADMIN_CanUpdateData_Test(){
+    public void AuthenticatedUser_with_Role_ADMIN_CanUpdateData_Test() {
 
         String username = ConfigurationReader.getProperty("spartan.admin_role.name");
         String password = ConfigurationReader.getProperty("spartan.admin_role.password");
 
         given()
                 // this is how we do basic auth authentication in RestAssured
-                .auth().basic(username,password)
+                .auth().basic(username, password)
                 .log().all()
-                .pathParam("spartan_id",117)
+                .pathParam("spartan_id", 117)
                 .contentType(ContentType.JSON)
-                .body(new Spartan("Asim","Male",987654321)).
+                .body(new Spartan("Asim", "Male", 987654321)).
 
-        when()
+                when()
                 .put("/spartans/{spartan_id}").
-        then()
+                then()
                 .log().all()
                 .statusCode(204)
-                .body( blankOrNullString() )
+                .body(blankOrNullString())
 
 
         ;
 
 
     }
-
 
 
 }

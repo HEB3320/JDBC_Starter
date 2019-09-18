@@ -2,36 +2,85 @@ package RestPractice;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import utils.ConfigurationReader;
 
 import static io.restassured.RestAssured.*;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.Matchers.*;
 
 public class JsonSchemaValidation {
 
     @BeforeClass
     public static void setUp() {
-        RestAssured.baseURI = "http://54.145.11.232";
-        RestAssured.port = 8000;
-        RestAssured.basePath = "/api";
+        RestAssured.baseURI = ConfigurationReader.getProperty("spartan.base_uri");
+        RestAssured.port = Integer.parseInt(ConfigurationReader.getProperty("spartan.port"));
+        RestAssured.basePath = ConfigurationReader.getProperty("spartan.base_uri");;
+        // this is how we can add basic auth for entire test
         RestAssured.authentication = basic("user", "user");
     }
-    @AfterClass
-    public static void tearDown() {
-        RestAssured.reset();
-    }
-    @Test
-    public void schemaTest() {
 
-        get("/spartans/11")
-                .then()
+    /*
+    * Given user with valid credentials provided
+    * when user send get request to /spartans/{id}
+    * then the response json format should match the schema SingleSpartanSchema.json
+    *
+    * */
+    @Test
+    public void SingleSpartanResponse_JsonSchema_Test() {
+
+        when()
+            .get("/spartans/11")
+        .then()
                 .assertThat()
                 .body(matchesJsonSchemaInClasspath("SingleSpartanSchema.json"));
 
+    }
+
+    /*
+     * Given user with valid credentials provided
+     * when user send get request to /spartans
+     * then the response json format should match the schema SpartanArraySchema.json
+     *
+     * */
+    @Test
+    public void AllSpartanResponse_JsonSchema_Test() {
+        given()
+            .contentType(ContentType.JSON).
+        when()
+                .get("/spartans")
+        .then()
+                .assertThat()
+                .body(matchesJsonSchemaInClasspath("SpartanArraySchema.json"));
+
+    }
+
+    /*
+     * Given user with valid credentials provided
+     * when user send get request to /spartans/search
+     * then the response json format should match the schema SearchResultSchema.json
+     *
+     * */
+    @Test
+    public void SearchSpartanResponse_JsonSchema_Test() {
+
+        given()
+                .queryParam("gender", "female").
+        when()
+                .get("/spartans/search").
+        then()
+                .assertThat()
+                .body(matchesJsonSchemaInClasspath("SearchResultSchema.json"));
+
+    }
+
+
+
+
+    @AfterClass
+    public static void tearDown() {
+        RestAssured.reset();
     }
 
 

@@ -16,7 +16,7 @@ public class TestBase {
     }
 
     @AfterClass
-    public static void tearDown(){
+    public static void tearDown() {
         RestAssured.reset();
     }
 }

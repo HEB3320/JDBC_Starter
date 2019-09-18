@@ -30,13 +30,13 @@
             "type": "integer"
           },
           "name": {
-            "type": "string",
+            "type": "string"
           },
           "gender": {
-            "type": "string",
+            "type": "string"
           },
           "phone": {
-            "type": "integer",
+            "type": "integer"
           }
         }
       }
@@ -101,7 +101,7 @@
       "type": "integer"
     },
     "number": {
-      "type": "integer",
+      "type": "integer"
     },
     "sort": {
       "type": "object",

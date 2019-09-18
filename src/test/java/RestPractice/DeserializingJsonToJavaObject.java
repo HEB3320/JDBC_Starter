@@ -6,8 +6,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import utils.ConfigurationReader;
 
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.*;
+import static io.restassured.RestAssured.get;
+import static io.restassured.RestAssured.given;
 
 public class DeserializingJsonToJavaObject {
 
@@ -25,14 +25,14 @@ public class DeserializingJsonToJavaObject {
 
         // FIRST WAY
         Spartan sp1 = get("/spartans/10")//.prettyPeek()
-                        .jsonPath()
-                        .getObject("",Spartan.class) ;
+                .jsonPath()
+                .getObject("", Spartan.class);
         System.out.println(sp1);
 
         // SECOND WAY
 
         Spartan sp2 = get("/spartans/15")//.prettyPeek()
-                        .as(Spartan.class);
+                .as(Spartan.class);
         System.out.println(sp2);
 
     }
@@ -46,7 +46,7 @@ public class DeserializingJsonToJavaObject {
                 .log().all()
                 .contentType(ContentType.JSON)
                 .body(spartan).
-        when()
+                when()
                 .post("/spartans").
                 then()
                 .statusCode(201);

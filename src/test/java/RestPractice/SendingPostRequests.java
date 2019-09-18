@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import static io.restassured.RestAssured.*;
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 public class SendingPostRequests {
@@ -78,9 +78,9 @@ public class SendingPostRequests {
                 .log().all()
                 .contentType(ContentType.JSON)
                 .body(bodyMap).
-        when()
+                when()
                 .post("/spartans").
-        then()
+                then()
                 .log().all()
                 .statusCode(201)
                 .contentType(ContentType.JSON)
@@ -122,9 +122,9 @@ public class SendingPostRequests {
                 .log().all()
                 .contentType(ContentType.JSON)
                 .body(new File("src/test/resources/data.json")).
-        when()
+                when()
                 .post("/spartans").
-        then()
+                then()
                 .log().all()
                 .statusCode(201)
                 .contentType(ContentType.JSON)

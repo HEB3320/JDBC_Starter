@@ -34,7 +34,7 @@ public class Main3 {
                 + " " + rs.getObject("COUNTRY_Name")
                 + " " + rs.getObject("REGION_ID"));
 
- //       rs.beforeFirst(); // move the cursor to the location right before first row
+        //       rs.beforeFirst(); // move the cursor to the location right before first row
 //        System.out.println(rs.getObject("COUNTRY_ID")
 //                + " " + rs.getObject("COUNTRY_Name")
 //                + " " + rs.getObject("REGION_ID"));
@@ -47,23 +47,12 @@ public class Main3 {
 
         //rs.first();
         rs.beforeFirst();
-        while(rs.next()){
+        while (rs.next()) {
             System.out.println(rs.getObject("COUNTRY_ID")
-                    + " "+ rs.getObject("COUNTRY_Name")
-                    + " "+ rs.getObject("REGION_ID") );
+                    + " " + rs.getObject("COUNTRY_Name")
+                    + " " + rs.getObject("REGION_ID"));
 
         }
-
-
-
-
-
-
-
-
-
-
-
 
 
     }

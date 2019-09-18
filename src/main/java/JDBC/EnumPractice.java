@@ -5,19 +5,19 @@ public class EnumPractice {
 
     public static void main(String[] args) {
 
-        Season s1 = Season.SUMMER ;
+        Season s1 = Season.SUMMER;
 
-        takeSeasonAction( s1 );
+        takeSeasonAction(s1);
 
-        takeSeasonAction( Season.WINTER );
+        takeSeasonAction(Season.WINTER);
 
 
     }
 
 
-    static void takeSeasonAction(Season season){
+    static void takeSeasonAction(Season season) {
 
-        switch (season){
+        switch (season) {
 
             case SPRING:
                 System.out.println("CELEBRATE NAWRUZ");
@@ -31,14 +31,10 @@ public class EnumPractice {
             case WINTER:
                 System.out.println("Snowboarding , Chirstmas , New Year , Hibernate ");
                 break;
-                default:
-                    System.out.println("NOT A VALID SEASON !!!");
+            default:
+                System.out.println("NOT A VALID SEASON !!!");
 
         }
-
-
-
-
 
 
     }

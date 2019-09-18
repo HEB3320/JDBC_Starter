@@ -3,12 +3,25 @@
   "type": "array",
   "items": {
     "type": "object",
-    "required": ["id","name","gender","phone"],
+    "required": [
+      "id",
+      "name",
+      "gender",
+      "phone"
+    ],
     "properties": {
-      "id": {"type": "integer"},
-      "name": {"type": "string"},
-      "gender": {"type": "string"},
-      "phone": {"type": "integer"}
+      "id": {
+        "type": "integer"
+      },
+      "name": {
+        "type": "string"
+      },
+      "gender": {
+        "type": "string"
+      },
+      "phone": {
+        "type": "integer"
+      }
     }
   }
 }
