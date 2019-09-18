@@ -92,28 +92,28 @@ public class SendingPostRequests {
 
     }
 
-    @Test
-    public void Add_NewSpartan_WithPojoAsBody_Test() {
-
-        Spartan spartan = new Spartan("Myensulu", "Female", 1231231231);
-
-        given()
-                .log().all()
-                .contentType(ContentType.JSON)
-                .body(spartan).
-                when()
-                .post("/spartans").
-                then()
-                .log().all()
-                .statusCode(201)
-                .contentType(ContentType.JSON)
-                .body("success", is("A Spartan is Born!"))
-                .body("data.name", equalToIgnoringCase("Myensulu"))
-                .body("data.phone", hasToString("1231231231"))
-
-        ;
-
-    }
+//    @Test
+//    public void Add_NewSpartan_WithPojoAsBody_Test() {
+//
+//        Spartan spartan = new Spartan("Myensulu", "Female", 1231231231);
+//
+//        given()
+//                .log().all()
+//                .contentType(ContentType.JSON)
+//                .body(spartan).
+//                when()
+//                .post("/spartans").
+//                then()
+//                .log().all()
+//                .statusCode(201)
+//                .contentType(ContentType.JSON)
+//                .body("success", is("A Spartan is Born!"))
+//                .body("data.name", equalToIgnoringCase("Myensulu"))
+//                .body("data.phone", hasToString("1231231231"))
+//
+//        ;
+//
+//    }
 
     @Test
     public void Add_NewSpartan_With_ExternalFile_Test() {
@@ -136,61 +136,61 @@ public class SendingPostRequests {
 
     }
 
-    @Test
-    public void Add_NewSpartan_negative_Test() {
-
-        Spartan spartan = new Spartan("M", "Female", 1231231231);
-
-        given()
-                .log().all()
-                .contentType(ContentType.JSON)
-                .body(spartan).
-                when()
-                .post("/spartans").
-                then()
-                .log().all()
-                .assertThat()
-                .statusCode(400)
-                .body("error", is("Bad Request"))
-                .body("errors[0].defaultMessage"
-                        , is("name should be at least 2 character and max 15 character"))
-
-        ;
-
-    }
-
-    @Test
-    public void Add_NewSpartan_negativeNameGenderPhone_Test() {
-
-        Spartan spartan = new Spartan("M", "F", 123);
-
-        given()
-                .log().all()
-                .contentType(ContentType.JSON)
-                .body(spartan).
-                when()
-                .post("/spartans").
-                then()
-                .log().all()
-                .assertThat()
-                .statusCode(400)
-                .body("error", is("Bad Request"))
-//                .body("errors.defaultMessage"
-//                        ,hasItem("name should be at least 2 character and max 15 character"))
-//                .body("errors.defaultMessage"
-//                                ,hasItem("Gender should be either Male or Female")
-                .body("errors.defaultMessage", hasSize(3))
-                .body("errors.defaultMessage",
-                        hasItems("Gender should be either Male or Female"
-                                , "Phone number should be at least 10 digit and UNIQUE!!"
-                                , "name should be at least 2 character and max 15 character"))
-                .body("message", containsString("Error count: 3"))
-        ;
-
-    }
-
-
-
-
-
+//    @Test
+//    public void Add_NewSpartan_negative_Test() {
+//
+//        Spartan spartan = new Spartan("M", "Female", 1231231231);
+//
+//        given()
+//                .log().all()
+//                .contentType(ContentType.JSON)
+//                .body(spartan).
+//                when()
+//                .post("/spartans").
+//                then()
+//                .log().all()
+//                .assertThat()
+//                .statusCode(400)
+//                .body("error", is("Bad Request"))
+//                .body("errors[0].defaultMessage"
+//                        , is("name should be at least 2 character and max 15 character"))
+//
+//        ;
+//
+//    }
+//
+//    @Test
+//    public void Add_NewSpartan_negativeNameGenderPhone_Test() {
+//
+////        Spartan spartan = new Spartan("M", "F", 123);
+//
+//        given()
+//                .log().all()
+//                .contentType(ContentType.JSON)
+//                .body(spartan).
+//                when()
+//                .post("/spartans").
+//                then()
+//                .log().all()
+//                .assertThat()
+//                .statusCode(400)
+//                .body("error", is("Bad Request"))
+////                .body("errors.defaultMessage"
+////                        ,hasItem("name should be at least 2 character and max 15 character"))
+////                .body("errors.defaultMessage"
+////                                ,hasItem("Gender should be either Male or Female")
+//                .body("errors.defaultMessage", hasSize(3))
+//                .body("errors.defaultMessage",
+//                        hasItems("Gender should be either Male or Female"
+//                                , "Phone number should be at least 10 digit and UNIQUE!!"
+//                                , "name should be at least 2 character and max 15 character"))
+//                .body("message", containsString("Error count: 3"))
+//        ;
+//
+//    }
+//
+//
+//
+//
+//
 }

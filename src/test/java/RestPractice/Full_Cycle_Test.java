@@ -28,6 +28,9 @@ public class Full_Cycle_Test extends TestBase{
                 .statusCode(204)
                 ;
 
+        ///   users/1/horses/5
+        ///  users/{varName} -->>
+        ///  users/:varName -->>
 
         //  verifying the updated data using get request
         given()

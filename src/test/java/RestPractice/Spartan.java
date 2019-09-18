@@ -22,14 +22,14 @@ public class Spartan {
         this.phone = phone;
     }
     @JsonIgnore  // this will enable us to ignore ID field from being written into json
-                // this will happen when you do seriliaze
+    // this will happen when you do seriliaze
     public long getId() {
         return id;
     }
 
 
     @JsonProperty // this will specifically tell to write this into pojo from json
-                // this will happen when you do deseriliaze
+    // this will happen when you do deseriliaze
     public void setId(long id) {
         this.id = id;
     }
