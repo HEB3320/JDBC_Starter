@@ -16,6 +16,17 @@
 
 
     <dependencies>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>4.1.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>4.1.1</version>
+        </dependency>
 <!--        This is the oracle jdbc jar file -->
         <dependency>
             <groupId>oracle</groupId>
@@ -40,15 +51,6 @@
             <artifactId>javafaker</artifactId>
             <version>1.0.1</version>
         </dependency>
-
-        <dependency>
-         <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>4.1.1</version>
-         <scope>test</scope>
-        </dependency>
-
-
 
     </dependencies>
 
