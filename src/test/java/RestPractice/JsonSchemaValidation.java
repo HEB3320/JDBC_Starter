@@ -16,7 +16,7 @@ public class JsonSchemaValidation {
     public static void setUp() {
         RestAssured.baseURI = ConfigurationReader.getProperty("spartan.base_uri");
         RestAssured.port = Integer.parseInt(ConfigurationReader.getProperty("spartan.port"));
-        RestAssured.basePath = ConfigurationReader.getProperty("spartan.base_uri");;
+        RestAssured.basePath = ConfigurationReader.getProperty("spartan.base_path");;
         // this is how we can add basic auth for entire test
         RestAssured.authentication = basic("user", "user");
     }
@@ -29,10 +29,12 @@ public class JsonSchemaValidation {
     * */
     @Test
     public void SingleSpartanResponse_JsonSchema_Test() {
-
+        given()
+                .log().all().
         when()
             .get("/spartans/11")
         .then()
+                .log().all()
                 .assertThat()
                 .body(matchesJsonSchemaInClasspath("SingleSpartanSchema.json"));
 
@@ -46,11 +48,16 @@ public class JsonSchemaValidation {
      * */
     @Test
     public void AllSpartanResponse_JsonSchema_Test() {
+
+        //RestAssured.authentication = null ;
+
         given()
+                .log().all()
             .contentType(ContentType.JSON).
         when()
                 .get("/spartans")
         .then()
+                .log().all()
                 .assertThat()
                 .body(matchesJsonSchemaInClasspath("SpartanArraySchema.json"));
 
@@ -66,10 +73,12 @@ public class JsonSchemaValidation {
     public void SearchSpartanResponse_JsonSchema_Test() {
 
         given()
+                .log().all()
                 .queryParam("gender", "female").
         when()
                 .get("/spartans/search").
         then()
+                .log().all()
                 .assertThat()
                 .body(matchesJsonSchemaInClasspath("SearchResultSchema.json"));
 

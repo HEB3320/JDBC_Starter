@@ -1,5 +1,5 @@
 {
-  "title": "The is Simple Schema for <Search Spartan> response, it define required structure of how json object should look like",
+  "title": "The is Simple Schema for Search Spartan response, it define required structure of how json object should look like",
   "type": "object",
   "required": [
     "content",
