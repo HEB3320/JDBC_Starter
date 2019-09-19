@@ -17,7 +17,6 @@ public class MyStepdefs {
     RequestSpecification requestSpec ;
     Response response;
 
-
     @Before  // this is before annotation coming from cucumber
             //  it will let the method run right before the scenario !
     public void setUp() {
