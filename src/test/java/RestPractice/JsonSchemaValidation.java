@@ -7,7 +7,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import utils.ConfigurationReader;
 
-import static io.restassured.RestAssured.*;
+import static io.restassured.RestAssured.basic;
+import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class JsonSchemaValidation {
@@ -49,14 +50,12 @@ public class JsonSchemaValidation {
     @Test
     public void AllSpartanResponse_JsonSchema_Test() {
 
-        //RestAssured.authentication = null ;
-
         given()
                 .log().all()
             .contentType(ContentType.JSON).
         when()
-                .get("/spartans")
-        .then()
+                .get("/spartans").
+        then()
                 .log().all()
                 .assertThat()
                 .body(matchesJsonSchemaInClasspath("SpartanArraySchema.json"));
@@ -83,8 +82,6 @@ public class JsonSchemaValidation {
                 .body(matchesJsonSchemaInClasspath("SearchResultSchema.json"));
 
     }
-
-
 
 
     @AfterClass
