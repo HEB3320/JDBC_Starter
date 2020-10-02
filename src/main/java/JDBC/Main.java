@@ -33,7 +33,7 @@ public class Main {
 
         // once we have connection object , now we can create statement object. and it has ability to execute query
         //Statement stmt = conn.createStatement();
-        // optionally you may do as below , if you don't want to just move top tp bottom direction
+        // optionally you may do as below , if you don't want to just move top to bottom direction
         Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
         // use Statement Object to run query and store the result in ResultSet object

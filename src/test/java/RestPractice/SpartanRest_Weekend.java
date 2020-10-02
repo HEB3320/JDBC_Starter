@@ -17,7 +17,7 @@ public class SpartanRest_Weekend {
 
     @BeforeClass
     public static void setUp() {
-        RestAssured.baseURI = "http://3.89.115.0";
+        RestAssured.baseURI = "http://54.146.86.143";
         RestAssured.port = 8000;
         RestAssured.basePath = "/api";
         // above will generate a BASE REQUEST URL OF http://52.23.254.102:8000/api
@@ -98,7 +98,7 @@ public class SpartanRest_Weekend {
                 //param("gender","Male").
                         when().
                         get("/spartans/search");
-
+        System.out.println(response.asString());
         assertEquals(200, response.statusCode());
         assertFalse(response.asString().contains("Female"));
 
@@ -107,7 +107,7 @@ public class SpartanRest_Weekend {
 
         // jsonPath for content return a json array
         // in order to get single json object we would use  content[indexnumber]
-        // in order to get single field in that json obeject : content[indexnumber].fieldName
+        // in order to get single field in that json object : content[indexnumber].fieldName
         // for example content[1].phone --> second items phone number
         // if we want to store entire phone as a List
         // we can use getList methods with jsonPath by taking out index
@@ -134,21 +134,24 @@ public class SpartanRest_Weekend {
         System.out.println(myJsonMap.get("name"));
         System.out.println(myJsonMap.get("gender"));
         System.out.println(myJsonMap.get("phone"));
-
+      //  String phoneList = response.jsonPath().getString("phone");
+      //  System.out.println(phoneList);
     }
 
     @Test
     public void All_Spartan_Map_Test() {
 
         Response response = get("/spartans");
-        List<Map<String, Object>> allSpartans = response.jsonPath().getList("");
+        List<Map<String, Object>> allSpartans = response.path("");
 
-        System.out.println(allSpartans);
+      /*  System.out.println(allSpartans);
         for (Map<String, Object> each : allSpartans) {
-            System.out.println(each);
+            System.out.println(each);*/
+
+allSpartans.forEach(System.out::println);
         }
 
-    }
+  //  }
 
     @Test
     public void Seach_All_Spartan_Map_Test() {

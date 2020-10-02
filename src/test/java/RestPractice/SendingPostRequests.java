@@ -2,11 +2,15 @@ package RestPractice;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
+import org.apache.http.HttpStatus;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
@@ -16,14 +20,14 @@ public class SendingPostRequests {
 
     @BeforeClass
     public static void setUp() {
-        RestAssured.baseURI = "http://3.89.115.0";
+        RestAssured.baseURI = "http://54.146.86.143";
         RestAssured.port = 8000;
         RestAssured.basePath = "/api";
         // above will generate a BASE REQUEST URL OF http://52.23.254.102:8000/api
     }
 
     @Test
-    public void Single_Spartan_LoggingAll_Detals_Test() {
+    public void Single_Spartan_LoggingAll_Details_Test() {
 
         given()
                 .pathParam("my_id", 3)
@@ -188,9 +192,116 @@ public class SendingPostRequests {
 //        ;
 //
 //    }
-//
-//
-//
-//
-//
+
+    @Test
+    public void selfTest5() {
+
+
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("name", "Mary Lee");
+        data.put("gender", "Female");
+        data.put("phone", 1456426132);
+
+
+        given().contentType(ContentType.JSON).body(data)
+                .when().post("/spartans").then().log().all().statusCode(HttpStatus.SC_CREATED)
+                .body("success", equalTo("A Spartan is Born!")).header("Content-Type", "application/json")
+                .body("data.phone", hasToString("1456426132"));
+
+    }
+
+    @Test
+    public void selfTest6() {
+
+        SpartanPojo pojo = new SpartanPojo("Steven Fishback", "Male", 1234567890);//lombok
+
+        given().body(pojo).contentType(ContentType.JSON).log().all()
+                .when().post("/spartans")
+                .then().statusCode(HttpStatus.SC_CREATED).log().all()
+                .body("data.name", is("Steven Fishback"));
+
+    }
+
+    @Test
+    public void selfLombokPojoToJson() {
+
+        SpartanPojo pojo = new SpartanPojo("Steven Fishback", "Male", 1234567890);
+
+        given().body(pojo).contentType(ContentType.JSON).log().all()
+                .when().post("/spartans")
+                .then().statusCode(HttpStatus.SC_CREATED).log().all()
+                .body("data.name", is("Steven Fishback"));
+
+    }
+
+    @Test
+    public void selfJsonToPojo() {
+
+        Spartan[] response =
+
+                given().accept(ContentType.JSON).get("/spartans")
+                        .as(Spartan[].class);
+
+        System.out.println(response.length);
+
+        System.out.println("response[0].getName() = " + response[0].getName());
+    }
+
+    @Test
+    public void selfJsonToPojo2() {
+
+        List<String> list =
+
+                given().accept(ContentType.JSON).get("/spartans")
+                        .jsonPath().getList("");
+
+        System.out.println(list.size());
+        System.out.println("list of names are = " + list);
+
+    }
+
+
+    @Test
+    public void testSelfNews() {
+        JsonPath jsonPath =
+                given().accept(ContentType.JSON)
+                        //.log().all()
+                        .baseUri("http://newsapi.org")
+                        .basePath("/v2")
+                        .param("country", "us")
+                        .param("category", "business")
+                        .param("apiKey", "371ba171643c4ca0bb366e506e217bf2")
+                        .get("/top-headlines")
+                        .then()
+                     //   .log().all()
+                        .extract()
+                        .jsonPath();
+String author = jsonPath.getString("articles[0].author");
+String name = jsonPath.getString("articles[0].source.name");
+        List<String> authors = jsonPath.getList("articles.author");
+        System.out.println(author);
+        System.out.println(name);
+        System.out.println(authors);
+
+
+        NewsPojo newsPojo =new NewsPojo("Samson X Horne","TribLIVE");
+        System.out.println(newsPojo);
+       NewsPojo n1 =  jsonPath.getObject("articles[0]",NewsPojo.class);
+        System.out.println(n1);
+
+
+        //get entire article as a list
+
+        List<NewsPojo> artcLst = jsonPath.getList("articles",NewsPojo.class);
+      //  System.out.println(artcLst);
+        artcLst.forEach(System.out::println);
+
+
+
+
+
+
+    }
+
+
 }

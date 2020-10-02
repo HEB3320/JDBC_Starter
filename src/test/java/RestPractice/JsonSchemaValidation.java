@@ -17,7 +17,7 @@ public class JsonSchemaValidation {
     public static void setUp() {
         RestAssured.baseURI = ConfigurationReader.getProperty("spartan.base_uri");
         RestAssured.port = Integer.parseInt(ConfigurationReader.getProperty("spartan.port"));
-        RestAssured.basePath = ConfigurationReader.getProperty("spartan.base_path");;
+        RestAssured.basePath = ConfigurationReader.getProperty("spartan.base_path");
         // this is how we can add basic auth for entire test
         RestAssured.authentication = basic("user", "user");
     }

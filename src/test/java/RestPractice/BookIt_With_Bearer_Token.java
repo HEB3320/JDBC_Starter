@@ -4,6 +4,7 @@ import io.restassured.RestAssured;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.notNullValue;
 
@@ -23,14 +24,13 @@ public class BookIt_With_Bearer_Token {
 
         given()
                 .queryParam("email", "emaynell8f@google.es")
-                .queryParam("password", "besslebond").
-                when()
+                .queryParam("password", "besslebond")
+                .when()
                 .get("/sign").
                 then()
                 .log().all()
                 .statusCode(200)
-                .body("accessToken", notNullValue()
-                );
+                .body("accessToken", notNullValue());
 
     }
 

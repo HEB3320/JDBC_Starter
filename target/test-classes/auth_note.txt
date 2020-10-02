@@ -1,0 +1,68 @@
+
+Search for an AWS image called Cybertek_Latest_BasicAuth
+		--->> select the one end with Basic Auth in the name
+
+		open same ports we did before  and you will get
+		Spartan App with Basic Auth to practice
+
+		3 roles are implemented in Spartan App with different Authority
+		USER 		--- only Read
+		EDITOR		-- Cread ,Read , Update
+		ADMIN 		-- Cread ,Read , Update   , Delete
+
+
+// Authentication
+
+	Telling the system who you are by providing some kind of credentials
+
+&
+
+Authorization
+
+	Telling the system what you can do according to who you are
+
+
+
+401 Unauthorized
+	you are providing bad credentials, I dont know who you are
+403 Forbidden
+	I know who you are , but you are not authorized to perform this request
+
+
+
+There are many type of Authentication&Authorization methods
+
+few popular ones :
+	API-KEY
+
+	Basic Auth  ,
+		providing username and password along with the request
+		it will add a header some a short token start with Basic xxxxxx
+		new release of Spartan App use this
+
+	Bearer Token
+		a long hashed token that contains information about user identity
+		and authority , it expire faster that basic auth token
+		and it's secure
+		Industry standard implementation for this type token is called
+		JWT Token
+
+		We need to send request by adding this token into
+		a header with Authorization  and then send request
+
+	Oath2
+		Just like Login with facebook and Google
+
+		We need to send request by adding this token into
+		a header with Authorization  and then send request
+
+
+
+
+
+
+
+
+
+
+

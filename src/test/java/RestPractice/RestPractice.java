@@ -5,6 +5,8 @@ import io.restassured.response.Response;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -22,7 +24,7 @@ public class RestPractice {
      * */
     @BeforeClass
     public static void setUp() {
-        RestAssured.baseURI = "http://52.23.254.102";
+        RestAssured.baseURI = "http://54.160.71.179";
         RestAssured.port = 8000;
         RestAssured.basePath = "/api";
         // above will generate a BASE REQUEST URL OF http://52.23.254.102:8000/api
@@ -63,6 +65,8 @@ public class RestPractice {
 
         // 1st approach to test header exists is by checking the value is null or not
         Response response = RestAssured.get("/hello");
+        System.out.println(response.asString());
+        System.out.println(response.headers());
 //        String headerValue = response.getHeader("Date");
 //        System.out.println(headerValue);
 //        assertNotNull(headerValue);

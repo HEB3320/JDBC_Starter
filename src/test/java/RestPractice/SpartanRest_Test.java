@@ -14,7 +14,7 @@ public class SpartanRest_Test {
 
     @BeforeClass
     public static void setUp() {
-        RestAssured.baseURI = "http://3.89.115.0";
+        RestAssured.baseURI = "http://54.146.86.143";
         RestAssured.port = 8000;
         RestAssured.basePath = "/api";
         // above will generate a BASE REQUEST URL OF http://52.23.254.102:8000/api
@@ -40,6 +40,10 @@ public class SpartanRest_Test {
         boolean hasDateHeader = response.getHeaders().hasHeaderWithName("date");
         assertTrue(hasDateHeader);
     }
+
+
+
+
 
     //    Given no headers are provided
 //    When User send request to /api/spartans/2
@@ -104,7 +108,7 @@ public class SpartanRest_Test {
 
         // Response is the object to store Response data
 
-        // this is how we can path header to teh request
+        // this is how we can path header to the request
         Response response = given()
                 //.header("accept","application/json")
                 //.accept("application/json")

@@ -19,10 +19,10 @@ public class Full_Cycle_Test extends TestBase {
         //  updating the data using put request
         given()
                 .log().all()
-                .pathParam("id", spartanID)
+                .pathParam("id", spartanID).header("Content-Type","application/json")
                 .body(new Spartan("Zeynep", "Female", 1231231231)).
                 when()
-                .put("/spartans/{id}", spartanID).
+                .put("/spartans/{id}",spartanID).
                 then()
                 .log().all()
                 .statusCode(204)

@@ -2,6 +2,7 @@ package RestPractice;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.hamcrest.Matcher;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -52,6 +53,7 @@ public class HamCrestLibrary {
 
         assertThat(a + b, equalTo(30));
         assertThat(a + b, greaterThan(20));
+        assertThat(a*b,lessThan(300));
 
     }
 
@@ -61,14 +63,16 @@ public class HamCrestLibrary {
 
         int[] nums = {1, 4, 6, 7, 8};
 
-        //assertThat(nums, hasItemInArray(3));
+        //assertThat( nums, hasItemInArray(3));
         // assertThat(nums, arrayContaining(6));
         //Matchers.contains()
-        //assertThat(nums  , hasItemInArray(1));
+     //   assertThat(nums, hasItemInArray(equalTo(1)));
         // assertThat(1 ,hasItemInArray(1) );
 
 
     }
+
+
 
 
 }

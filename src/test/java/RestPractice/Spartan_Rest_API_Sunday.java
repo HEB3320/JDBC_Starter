@@ -7,6 +7,7 @@ import org.junit.Test;
 import utils.ConfigurationReader;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.with;
 import static org.hamcrest.Matchers.*;
 
 public class Spartan_Rest_API_Sunday {
@@ -30,7 +31,7 @@ public class Spartan_Rest_API_Sunday {
                 .statusCode(200)
                 .contentType(ContentType.JSON)
                 .assertThat()
-                .body("[0].name", equalTo("Nels"))
+                .body("[3].name", equalTo("Nels"))
                 .body("name", hasItem("Fidole"))
                 //.body("name", hasSize(114) )
                 .body("[1].gender", is("Male"))
@@ -56,10 +57,20 @@ public class Spartan_Rest_API_Sunday {
                 // there are multiple option to see exactly when we want to see the log
                 // in below example we only want to see the response log if any validation fails
                 .log().ifValidationFails()
-                .statusCode(200)
-
-        ;
+                .statusCode(200);
+    }
+@Test
+    public void tests(){
+        given().accept(ContentType.JSON).pathParam("idd",3).
+                when().get("/spartan/{idd}").
+                then().statusCode(200).log().all();
 
 
     }
+
+
+
+
+
+
 }
